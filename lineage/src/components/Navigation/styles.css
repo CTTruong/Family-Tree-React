@@ -1,0 +1,17 @@
+.side-crop { max-width: 375px; overflow: hidden; }
+.side-crop img { max-width: initial; width: 125%; }
+.side-crop { text-indent: -13%; }
+
+.nav.navbar-right{
+    margin-top: 7%;
+}
+@media (max-width: 768px){
+    .navbar-right{
+        margin-top: 10%;
+    }
+    /* .side-crop img { margin-left: 10%; } */
+    .side-crop {
+        text-indent: -16%;
+    }
+
+}

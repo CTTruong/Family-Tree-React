@@ -1,0 +1,15 @@
+.shop_products {
+    width: 80%;
+    height: 200px;
+    margin: auto;
+    padding: 10px;
+}
+.product_1 {
+    width: 50%;
+    height: 200px;
+    float: left;
+}
+.product_2 {
+    margin-left: 10%;
+    height: 200px;
+}
