@@ -1,5 +1,5 @@
 .circle{
-    border:1px solid #000;
+    border:2px solid rgb(93, 93, 93, .5);
     width:50px;
     height:50px;
     border-radius:100%;
@@ -26,7 +26,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background:green;
+    background: #004D0D;
 }
 .circle.plus:before{
     width: 2px;

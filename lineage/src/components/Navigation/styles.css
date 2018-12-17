@@ -1,5 +1,5 @@
 .side-crop { max-width: 375px; overflow: hidden; }
-.side-crop img { max-width: initial; width: 125%; }
+.side-crop img { max-width: initial; width: 115%; }
 .side-crop { text-indent: -13%; }
 
 .nav.navbar-right{

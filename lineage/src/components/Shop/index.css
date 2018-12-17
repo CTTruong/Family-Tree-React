@@ -1,15 +1,35 @@
 .shop_products {
-    width: 80%;
-    height: 200px;
-    margin: auto;
-    padding: 10px;
+  width: 80%;
+  height: 200px;
+  margin: auto;
+  padding: 10px;
 }
 .product_1 {
-    width: 50%;
-    height: 200px;
-    float: left;
+  width: 50%;
+  height: 200px;
+  float: left;
 }
 .product_2 {
-    margin-left: 10%;
-    height: 200px;
+  margin-left: 10%;
+  height: 200px;
+}
+.basic-kit , .delux-kit{
+  width: 250px;
+  height: 200px;
+  border: 2px solid rgb(170, 170, 170);
+
+}
+
+.pbtn{
+  width: 200px;
+  border-radius: 20px;
+  outline: none;
+}
+
+.pbtn:hover{
+  background-color: rgb(3, 100, 20, .8);
+  transition: 1s;
+}
+.pbtn:active{
+  background-color: #949E96 ;
 }
