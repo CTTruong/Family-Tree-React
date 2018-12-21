@@ -1,0 +1,29 @@
+{
+    "relationType": [
+      {
+        "id": 1,
+        "name": "Father",
+        "sort": -1
+      },
+      {
+        "id": 2,
+        "name": "Mother",
+        "sort": -1
+      },
+      {
+        "id": 3,
+        "name": "Spouse",
+        "sort": 0
+      },
+      {
+        "id": 4,
+        "name": "Son",
+        "sort": 1
+      },
+      {
+        "id": 5,
+        "name": "Daughter",
+        "sort": 1
+      }
+    ]
+  }

@@ -1,10 +1,31 @@
-.side-crop { max-width: 375px; overflow: hidden; }
-.side-crop img { max-width: initial; width: 115%; }
+
+.side-crop { max-width: 420px; overflow: hidden; }
+.side-crop img { max-width: initial; width: 125%; }
 .side-crop { text-indent: -13%; }
 
 .nav.navbar-right{
     margin-top: 7%;
 }
+
+a{
+  text-decoration: none;
+  color: #6C6C79   ;
+
+}
+.navbar-default .navbar-nav>.active>a{
+    background-color: inherit !important;
+    background-image: inherit!important;
+    background-repeat: inherit !important;
+    box-shadow: none;
+}
+
+
+
+.nav-size:hover{
+  text-decoration-style: double;
+  text-decoration: underline;
+}
+
 @media (max-width: 768px){
     .navbar-right{
         margin-top: 10%;
@@ -14,4 +35,8 @@
         text-indent: -16%;
     }
 
+
+    .nav-size{
+      font-size: 1.1em;
+    }
 }

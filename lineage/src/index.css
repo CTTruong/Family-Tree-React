@@ -34,7 +34,7 @@ a:hover
 .pbtn {
   position: relative;
   display: block;
-  width: 250px;
+  width: 200px;
   margin: 20px auto;
   padding: 10px;
   background-color: #fff;
@@ -42,7 +42,6 @@ a:hover
   color: #000;
   text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
   transform-style: flat;
   transition: all 250ms ease-out;
 }
@@ -57,7 +56,6 @@ a:hover
 .paper {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
   border-color: #dedede;
-  border-radius: 25px;
 }
 
 /* Raised effect – pushes up on hover */
@@ -69,7 +67,6 @@ a:hover
 }
 .paper-raise:hover {
   border: 1px solid #fff;
-  border-radius: 25px;
 }
 .paper-raise:hover:before {
   box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);
@@ -85,11 +82,15 @@ a:hover
   width: 100%;
   height: 100%;
   box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);
-  border-radius: 25px;
 }
 .paper-raise-flatten:hover {
   border-color: #dedede;
 }
 .paper-raise-flatten:hover:before {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
+}
+.pbtn[disabled] {
+  /* don't let button block mouse events from reaching wrapper */
+  opacity: 0.3;
+  pointer-events: none;
 }

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import '../SignIn/styles.css';
 
 const SignUpPage = () => (
-  <div className="card col-md-offset-3 
-                    col-md-6 col-xs-offset-1 col-xs-10  
+  <div className="card col-md-offset-3
+                    col-md-6 col-xs-offset-1 col-xs-10
                     col-sm-offset-3 col-sm-6">
   <section>
     <div id="one">
@@ -45,7 +47,9 @@ const ERROR_MSG_ACCOUNT_EXISTS = `
   Try to login with this account instead.
 `;
 
-const PERMISSION_DENIED = "PERMISSION_DENIED" 
+const PERMISSION_DENIED = "PERMISSION_DENIED"
+const MISSING_CONTINUE_URL = "auth/missing-continue-uri"
+
 
 class SignUpFormBase extends Component {
   constructor(props) {
@@ -66,9 +70,7 @@ class SignUpFormBase extends Component {
         });
       })
       .then(() => {
-        return this.props.firebase.doSendEmailVerification();
-      })
-      .then(() => {
+        this.props.setTreeData({});
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
       })
@@ -77,11 +79,15 @@ class SignUpFormBase extends Component {
           error.message = ERROR_MSG_ACCOUNT_EXISTS;
         }
         if (error.code === PERMISSION_DENIED) {
+          this.props.setTreeData({});
           this.setState({ ...INITIAL_STATE });
           this.props.history.push(ROUTES.HOME);
         }
-        console.log("11"+error.code+"11");
-
+        if (error.code === MISSING_CONTINUE_URL) {
+          this.props.setTreeData({});
+          this.setState({ ...INITIAL_STATE });
+          this.props.history.push(ROUTES.HOME);
+        }
         this.setState({ error });
       });
 
@@ -105,7 +111,7 @@ class SignUpFormBase extends Component {
 
     const isInvalid =
       password === '' ||
-      email === '' 
+      email === ''
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -115,7 +121,7 @@ class SignUpFormBase extends Component {
             value={email}
             onChange={this.onChange}
             type="text"
-            className="form-control" 
+            className="form-control"
             placeholder="Email Address"
           />
         </div>
@@ -125,7 +131,7 @@ class SignUpFormBase extends Component {
             value={password}
             onChange={this.onChange}
             type="password"
-            className="form-control" 
+            className="form-control"
             placeholder="Password"
           />
         </div>
@@ -141,11 +147,19 @@ class SignUpFormBase extends Component {
 
 const SignUpLink = () => (
   <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+    Need an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
   </p>
 );
 
-const SignUpForm = withRouter(withFirebase(SignUpFormBase));
+const mapDispatchToProps = (dispatch) =>({
+  setTreeData: tree => dispatch({ type: 'SET_TREE_DATA', tree })
+})
+
+const SignUpForm = compose(
+  withRouter,
+  withFirebase,
+  connect(null,mapDispatchToProps)
+)(SignUpFormBase);
 
 export default SignUpPage;
 

@@ -1,0 +1,21 @@
+#searchForm{
+    margin-top: 30px;
+}
+
+span.icon{
+    top: 5px;
+    position: relative;
+    left: 0px;
+}
+.list{
+    text-transform: capitalize;
+}
+
+.list .item{       
+    width: 100%;
+    min-height: 100px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
