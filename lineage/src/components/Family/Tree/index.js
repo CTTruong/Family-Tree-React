@@ -47,7 +47,9 @@ class FamilyTree extends Component {
     }
     render() {
         return (
+    
             <div id="graph">
+
             </div>
         );
     }

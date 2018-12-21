@@ -241,6 +241,7 @@ class TreeBuilder {
       y: d.target.y
     }];
 
+  
     let fun = d3.line().curve(d3.curveStepAfter)
       .x(function(d) {
         return d.x;

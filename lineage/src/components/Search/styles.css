@@ -11,11 +11,23 @@ span.icon{
     text-transform: capitalize;
 }
 
-.list .item{       
+.list .item{
     width: 100%;
     min-height: 100px;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     border-radius: 10px;
     margin-bottom: 10px;
+}
+table, td, tr {
+    border: solid gray 1px;
+    margin-left: 6em;
+
+}
+
+table{
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);
+  border-radius: 15px;
+
 }

@@ -5,7 +5,8 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import './styles.css';
 
-
+//secret PzUiH9A7bvSdy6kv2Q1aNV835rqwWRCpu1XiPnlb
+//key UGfLEaQAEMYqhSvowmVLl1VoLPBzJDWPOaUVIlhF
 
 const Form = (props) => (
     <div >
@@ -21,6 +22,7 @@ const INITIAL_STATE = {
     yearBorn: '',
     // relation: '',
     error: null,
+    apiData: []
 };
 
 
@@ -29,6 +31,7 @@ class FormBase extends Component {
         super(props);
         this.state = { ...INITIAL_STATE };
         this.persons=[]
+
     }
 
     handleValidation() {
@@ -47,30 +50,76 @@ class FormBase extends Component {
         return formIsValid;
     }
 
+    getSimilarProfile = () => {
+        var self = this;
+        var Geni = window.Geni;
+        const { firstName, lastName, yearBorn } = this.state;
+
+        Geni.api('/profile/search?names=' + firstName + ' ' + lastName, function(response) {
+
+            if (response.results) {
+                self.setState({apiData: response.results.map(item => {
+                    return {
+                        first_name: item.first_name,
+                        last_name: item.last_name,
+                        birthdate: ((item.birth && item.birth.date && item.birth.date.formatted_date) || "NAN" )
+                    }
+                })});
+            }
+        });
+    }
+
     onSubmitButton = () => {
+        var self = this;
+        var Geni = window.Geni;
+
+        Geni.init({
+            app_id: 'UGfLEaQAEMYqhSvowmVLl1VoLPBzJDWPOaUVIlhF'
+        });
+
         const _=this; let db, persons = [];
         if (this.handleValidation()) {
-            const { firstName, lastName, yearBorn } = this.state;
-            if (yearBorn) {
 
-                db = this.props.firebase.db
-                    .ref('persons')
-                    .orderByChild('firstLastBorn')
-                    .equalTo(`${firstName.toLowerCase()}~${lastName.toLowerCase()}~${yearBorn}`)
-            } else {
-
-                db = this.props.firebase.db
-                    .ref('persons')
-                    .orderByChild('firstLast')
-                    .equalTo(`${firstName.toLowerCase()}~${lastName.toLowerCase()}`)
-            }
-            db.once('value').then( function (snapshot) {
-                var result = snapshot.val();
-                Object.keys(result).forEach(element => {
-                   persons.push(result[element]);
-                });
-                _.props.searchResults(persons);
+            Geni.getStatus(function(response) {
+                if(response.status == 'authorized') {
+                    // User is logged in and has authorized your application.
+                    // You can now make authorized calls to the API.
+                    self.getSimilarProfile();
+                } else {
+                    // User is either logged out, has not authorized the app or both.
+                    Geni.connect(function(response) {
+                        if(response.status == 'authorized') {
+                            // User is logged in and has authorized your application.
+                            // You can now make authorized calls to the API.
+                            self.getSimilarProfile();
+                        }  else {
+                            alert("unauthoriized")
+                            // User canceled the popup
+                        }
+                    });
+                }
             });
+
+            // if (yearBorn) {
+
+            //     db = this.props.firebase.db
+            //         .ref('persons')
+            //         .orderByChild('firstLastBorn')
+            //         .equalTo(`${firstName.toLowerCase()}~${lastName.toLowerCase()}~${yearBorn}`)
+            // } else {
+
+            //     db = this.props.firebase.db
+            //         .ref('persons')
+            //         .orderByChild('firstLast')
+            //         .equalTo(`${firstName.toLowerCase()}~${lastName.toLowerCase()}`)
+            // }
+            // db.once('value').then( function (snapshot) {
+            //     var result = snapshot.val();
+            //     Object.keys(result).forEach(element => {
+            //        persons.push(result[element]);
+            //     });
+            //     _.props.searchResults(persons);
+            // });
         }
     };
 
@@ -84,7 +133,7 @@ class FormBase extends Component {
         const isInvalid = (firstName === '' || lastName === '');
         return (
             <div id="searchForm">
-                <form >
+                <form style={{display: 'inline-block'}}>
                     <div className="form-group col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6">
                         <input
                             name="firstName"
@@ -141,6 +190,17 @@ class FormBase extends Component {
                         </div>
                     )}
                 </form>
+                <table>
+                {
+                    this.state.apiData.map(item => {
+                        return <tr key={item.id}>
+                                    <td>{item.first_name}</td>
+                                    <td>{item.last_name}</td>
+                                    <td>{((item.birthdate))}</td>
+                               </tr>
+                    })
+                }
+                </table>
             </div>
         );
     }
